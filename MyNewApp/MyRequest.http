@@ -8,9 +8,9 @@ POST http://localhost:5222/todos
 Content-Type: application/json
 
 {
-    "id":1,
-    "name": "write demo",
-    "dueDate": "2025-12-31",
+    "id":2,
+    "name": "write another demo",
+    "dueDate": "2026-12-31",
     "isCompleted": false
 }
 
