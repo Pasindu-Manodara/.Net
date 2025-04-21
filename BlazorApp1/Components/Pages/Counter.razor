@@ -1,0 +1,72 @@
+﻿@page "/counter/{initialCount:int?}"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCountAsync">Click me</button>
+
+<p> intial count = @InitialCount</p>
+
+<input @oninput = "OnInput">
+<p> text input= @text</p>
+
+<MyButton OnClick="IncrementCount" class="btn btn-success">My Button!</MyButton>
+
+<dev class="mt-3">
+    @* <input value="@inputText" @onchange="OnChange"> *@
+    <input @bind="inputText" @bind:event="oninput" @bind:after="Search">
+    <button @onclick="OnClick">clear</button>
+    <p>@inputText</p>
+    <p>@searchResult</p>
+</dev>
+
+@code {
+    private int currentCount = 0;
+
+    protected override void OnInitialized()
+    {
+        currentCount = InitialCount;
+    }
+    [Parameter]
+    public int InitialCount {get; set;} = 0;
+
+    string searchResult = "";
+
+    private string text = "";
+    string inputText = "";
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    async Task IncrementCountAsync()
+    {
+        await Task.Delay(1000);
+        currentCount++;
+    }
+    private void OnInput(ChangeEventArgs args)
+    {
+        text = (string)args.Value!;
+    }
+
+    private void OnClick(MouseEventArgs e)
+    {
+        inputText = "";
+    }
+
+    private void OnChange(ChangeEventArgs e)
+    {
+        inputText = (string)e.Value!;
+    }
+
+    async Task Search()
+    {
+        searchResult = "Searching...";
+        await Task.Delay(2000);
+        searchResult = $"Found {Random.Shared.Next()} results!";
+    }
+}
